@@ -1,162 +1,117 @@
-import sys
-import csv
-import argparse
-from Bio.Restriction import AllEnzymes
-from pyfaidx import Fasta
+#! /usr/bin/env python3
 
+import vcf
 
-__author__ = 'XY'
-
-
-## Aim of this program is to find restriction enzyme cut sites (e.g., use in GBS sequencing)
-## - Reference genome
-## - Regions where to look for cut sites
-## - List of enzymes to be considered
-##
-## We will use Biopython and pyfaidx
-## Required as an exiting and indexed reference genome (samtools faidx)
-## Check out
-## - IUPACAmbiguousDNA
-## - Seq
-## - RestrictionBatch
-
-
-## CONCEPT
-## TODO
-
-
-parser = argparse.ArgumentParser(description="Find restriction enzyme cut sites.")
-parser.add_argument('--reference', help="Path to the reference genome", type=str, required=True)
-parser.add_argument('--input_file', help="BED file with regions and annotation column, file needs to have a header (chr, start, end) and be tab delimited", type=argparse.FileType('r'), required=True)
-parser.add_argument('--res_enzymes', help="Restriction enzymes separated by ','", type=str, required=True)
+__author__ = 'XXX'
 
 
 ##
-## Calculates restriction cut sites for a given list of input
+##
+## Aim of this assignment is to annotate the variants with various attributes
+## We will use the API provided by "myvariant.info" - more information here: https://docs.myvariant.info
+## NOTE NOTE! - check here for hg38 - https://myvariant.info/faq
+## 1) Annotate the first 900 variants in the VCF file
+## 2) Store the result in a data structure (not in a database)
+## 3) Use the data structure to answer the questions
+##
+## 4) View the VCF in a browser
 ##
 
-
-## TODO -> use this
-def check_header(row):
-    header_ok = True
-    if row[0].lower() != "chr":
-        header_ok = False
-    if row[1].lower() != "start":
-        header_ok = False
-    if row[2].lower() != "end":
-        header_ok = False
-
-    return header_ok
-
-
-
-def find_restriction_sites(sequence, enyzme_list):
-    ## TODO Create a Seq object (use IUPACAmbiguousDNA and Seq)
-    my_seq = ""
-
-    ## TODO Create restriction batch
-    rb = ""
-    print("\nSequence: %s" % str(my_seq))
+class Assignment3:
     
-    ## Search the sequence using the restriction batch
-    rb_result = None
-    
-    ## Parse the search result and store it in a list
-    enzyme_details = []
-
-            
-    ##return the enzyme_details
-
-
-def find_sequence(ref, chr, start, end):
-    ## TODO use ref
-    ## Check out https://pypi.org/project/pyfaidx/
-    return "" ## TODO
-
-
-def perform_analysis(hg_file, my_input, enzyme_list):
-    ## TODO Open output file - try to implement a feature that allows the user to choose the output file name
-    with my_input as my_fh, open("xy.file.name", "w") as my_ofh:
+    def __init__(self):
+        ## Check if pyvcf is installed
+        print("PyVCF version: %s" % vcf.VERSION)
         
-        csv_writer = csv.writer(my_ofh, delimiter="\t")
+        ## Call annotate_vcf_file here
+        
 
-        ## Process the regions
-        for row in csv.reader(my_fh, delimiter="\t"):
+    def annotate_vcf_file(self):
+        '''
+        - Annotate the VCF file using the following example code (for 1 variant)
+        - Iterate of the variants (use first 900)
+        - Store the result in a data structure
+        :return:
+        '''    
+        print("TODO")
+        
+        
+        ##
+        ## Example code for 1 variant
+        ##
+        import httplib2
+        h = httplib2.Http()
+        headers = {'content-type': 'application/x-www-form-urlencoded'}
+        params = 'ids=chr16:g.28883241A>G,chr1:g.35367G>A'
+        res, con = h.request('http://myvariant.info/v1/variant', 'POST', params, headers=headers)
+        
+        ## Use .decode('utf-8') on con object
+        
+        ##
+        ## End example code
+        ##
+        
+        return None  ## return the data structure here
+    
+    
+    def get_list_of_genes(self):
+        '''
+        Print the name of genes in the annotation data set
+        :return:
+        '''
+        print("TODO")
+    
+    
+    def get_num_variants_modifier(self):
+        '''
+        Print the number of variants with putative_impact "MODIFIER"
+        :return:
+        '''
+        print("TODO")
+        
+    
+    def get_num_variants_with_mutationtaster_annotation(self):
+        '''
+        Print the number of variants with a 'mutationtaster' annotation
+        :return:
+        '''
+        print("TODO")
+        
+    
+    def get_num_variants_non_synonymous(self):
+        '''
+        Print the number of variants with 'consequence' 'NON_SYNONYMOUS'
+        :return:
+        '''
+        print("TODO")
+        
+    
+    def view_vcf_in_browser(self):
+        '''
+        - Open a browser and go to https://vcf.iobio.io/
+        - Upload the VCF file and investigate the details
+        :return:
+        '''
+   
+        ## Document the final URL here
+        print("TODO")
             
-            ## TODO
-            
-            
-            ## Write row
-            csv_writer.writerow("")
-
-
-def print_all_enyzmes():
-    print("Printing all %d enzymes" % len(AllEnzymes))
-    for x in sorted(AllEnzymes):
-        print(x)
-
-## TODO
-def check_restriction_enzymes(enzyme_list):
-    ## TODO
-    ## Use AllEnzymes
-
-
-## Check the format of the input file
-def check_input_file_format(my_input):
-    print("Checking the format of the input")
-    with my_input as my_fh:
-        for row in csv.reader(my_fh, delimiter="\t"):
-            if len(row) != 3:
-                return "Number of columns in the input file is wrong (%d instead of %d)" % (len(row), 3)
-
-    return None
-
-
+    
+    def print_summary(self):
+        print("Print all results here")
+    
+    
 def main():
-
-    ## TODO Parse the arguments
-    args = parser.parse_args()
-    ref_file_path = ""
-    res_enzymes = ""
-
-    ## TODO assign/use correct variable
-    print("ref_file_path: " + str(ref_file_path))
-
-    ## Read the ref file
-    ref_file = Fasta(ref_file_path)
-    
-    ## TODO Input file
-    my_input_file = ""
-    
-    print("MyInput: " + str(my_input_file))
-    
-    if not my_input_file:
-        print("No input given")
-        return 0
-    
-    ## Check the input file format
-    check_result = check_input_file_format(my_input_file)
-    if check_result is not None:
-        print(check_result)
-        sys.exit(1)
-
+    print("Assignment 3")
+    assignment3 = Assignment3()
+    assignment3.print_summary()
+    print("Done with assignment 3")
         
-    ## Check the provided list of enzymes
-    print("Got these enzymes: " + str(args.res_enzymes))
-    if not args.res_enzymes:
-        print("No enzymes provided")
-        return 0
-    
-
-    ## Check that valid enzymes were given
-    check_restriction_enzymes(res_enzymes)
-    
-    ## Perform analysis
-    perform_analysis(ref_file, my_input_file, res_enzymes)
         
-    return 0
+if __name__ == '__main__':
+    main()
+   
+    
 
 
-if __name__ == "__main__":
-    sys.exit(main())
 
