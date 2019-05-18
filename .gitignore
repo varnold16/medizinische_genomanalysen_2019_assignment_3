@@ -1,0 +1,16 @@
+.idea
+venv
+
+# original files
+original*
+*original*
+
+# design folder
+designFolder
+
+# files in progress
+progress*
+*progress*
+
+# vcf-files
+*.vcf
