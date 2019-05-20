@@ -13,4 +13,7 @@ progress*
 *progress*
 
 # vcf-files
-*.vcf
+*.vcf*
+
+# json-files
+*.json
