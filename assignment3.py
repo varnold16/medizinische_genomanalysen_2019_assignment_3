@@ -71,8 +71,8 @@ class Assignment3:
 
     def get_list_of_genes(self):
         '''
-        Print the name of genes in the annotation data set
-        :return:
+        Get the name of genes in the annotation data set
+        :return: set of gene names
         '''
 
         count = 0
@@ -104,7 +104,7 @@ class Assignment3:
 
     def get_number_of_variants_modifier(self):
         '''
-        Print the number of variants with putative_impact "MODIFIER"
+        Get the number of variants with putative_impact "MODIFIER"
         '''
         number_of_variants_modifier = 0
 
@@ -118,7 +118,7 @@ class Assignment3:
 
     def get_number_of_variants_with_muttaster_annotation(self):
         '''
-        Print the number of variants with a 'mutationtaster' annotation
+        Get the number of variants with a 'mutationtaster' annotation
         '''
         variants_with_mutationtaster_annotation = 0
 
@@ -155,7 +155,7 @@ class Assignment3:
     def print_summary(self):
         print("\n"+"*"*80+"\n")
 
-        print("List of Genes:")
+        print("List of genes of annotated variants:")
         for i in self.list_of_genes:
             print(" * "+i)
         print("")
@@ -164,16 +164,26 @@ class Assignment3:
         print(" * variants modifier: "+str(self.number_of_variants_modifier))
         print(" * variants with mutationtaster annotation: "+str(self.number_of_variants_with_mutationtaster_annotation))
         print(" * variants non synonymous: "+str(self.number_of_variants_non_synonymous))
-
         print("")
 
-        print("For investigation use URL: "+self.url)
+        print("Investigaion via https://vcf.iobio.io/")
+        print(" * References found on chr16\n"
+              " * Variant density has gaps between about 38.2M and 46.4M,\n"
+              "   surrounded by peaks at about 34.2M and 46.4M\n"
+              " * Most frequent base changes are A>G, G>A, C>T and T>C\n"
+              " * 8615 variants of 10697 are SNPs\n")
+
+        print("Visualization and details can be obtained by following instructions:")
+        print(" * compress and index the vcf-file with:")
+        print(" "*5+"$ bgzip "+self.vcf_path)
+        print(" "*5+"$ tabix -p vcf "+self.vcf_path+".gz")
+        print(" * upload both files to "+self.url)
 
         print("\n" + "*" * 80 + "\n")
 
 
 def main():
-    print("Assignment 3\n")
+    print("Assignment 3")
     assignment3 = Assignment3()
     assignment3.print_summary()
     print("Done with assignment 3")
@@ -181,13 +191,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-"""DDX11L10
-HBA1
-HBA1
-LUC7L
-NPRL3
-RHBDF1
-RHBDF1
-SNRNP25
-Z84721.4"""
